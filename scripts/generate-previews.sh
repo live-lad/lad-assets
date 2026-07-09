@@ -100,7 +100,7 @@ for src in "$SOURCE_DIR"/*; do
     make_video_poster "$full" "$PREVIEW_DIR/$id.jpg"
     ver="$(version_for "$full")"
     asset="$(jq -n --arg id "$id" --arg name "$name" --arg ver "$ver" --arg base "$BASE_URL" \
-      '{id:$id,type:"video",name:$name,preview:($base+"/preview/"+$id+".mp4"),full:($base+"/full/"+$id+".mp4"),poster:($base+"/preview/"+$id+".jpg"),version:$ver}')"
+      '{id:$id,type:"video",name:$name,preview:($base+"/preview/"+$id+".mp4?v="+$ver),full:($base+"/full/"+$id+".mp4?v="+$ver),poster:($base+"/preview/"+$id+".jpg?v="+$ver),version:$ver}')"
   elif is_image "$base"; then
     full="$FULL_DIR/$id.$ext"
     cp -f "$src" "$full"
@@ -108,7 +108,7 @@ for src in "$SOURCE_DIR"/*; do
     ver="$(version_for "$full")"
     printf 'image             : %s\n' "$id" >&2
     asset="$(jq -n --arg id "$id" --arg name "$name" --arg ver "$ver" --arg base "$BASE_URL" --arg ext "$ext" \
-      '{id:$id,type:"image",name:$name,preview:($base+"/preview/"+$id+".jpg"),full:($base+"/full/"+$id+"."+$ext),version:$ver}')"
+      '{id:$id,type:"image",name:$name,preview:($base+"/preview/"+$id+".jpg?v="+$ver),full:($base+"/full/"+$id+"."+$ext+"?v="+$ver),version:$ver}')"
   else
     printf 'skip (unknown type): %s\n' "$base" >&2
     continue
