@@ -12,7 +12,7 @@ BASE_URL="https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main"
 PREVIEW_WIDTH=640
 IMAGE_PREVIEW_WIDTH=1280
 CROSSFADE_SECONDS=1.0
-SEAM_SSIM_THRESHOLD=0.7
+SEAM_SSIM_THRESHOLD=0.99
 
 is_video() { case "${1,,}" in *.mp4 | *.webm | *.mov | *.mkv) return 0 ;; *) return 1 ;; esac; }
 is_image() { case "${1,,}" in *.jpg | *.jpeg | *.png | *.webp) return 0 ;; *) return 1 ;; esac; }
@@ -42,12 +42,17 @@ seam_ssim() {
 }
 
 make_seamless_full() {
-  local src="$1" out="$2" d cut
+  local src="$1" out="$2" x="$3" d off
   d="$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$src")"
-  cut="$(LC_ALL=C awk -v d="$d" -v x="$CROSSFADE_SECONDS" 'BEGIN{printf "%.3f", d-x}')"
+  off="$(LC_ALL=C awk -v d="$d" -v x="$x" 'BEGIN{printf "%.3f", d-2*x}')"
   ffmpeg -y -i "$src" -filter_complex \
-    "[0]split[body][tail];[tail]trim=start=${cut},setpts=PTS-STARTPTS,format=yuva420p,fade=t=out:st=0:d=${CROSSFADE_SECONDS}:alpha=1[tf];[body]trim=0:${cut},setpts=PTS-STARTPTS[main];[main][tf]overlay,format=yuv420p[v]" \
+    "[0]split[main][pre];[pre]trim=0:${x},setpts=PTS-STARTPTS[pre2];[main]trim=${x}:${d},setpts=PTS-STARTPTS[main2];[main2][pre2]xfade=transition=fade:duration=${x}:offset=${off},format=yuv420p[v]" \
     -map "[v]" -an -c:v libx264 -preset veryfast -crf 20 -pix_fmt yuv420p -movflags +faststart "$out" </dev/null >/dev/null 2>&1
+}
+
+crossfade_len_for() {
+  local d="$1"
+  LC_ALL=C awk -v d="$d" -v x="$CROSSFADE_SECONDS" 'BEGIN{m=d/3.0; if (x<m) print x; else printf "%.3f", m}'
 }
 
 copy_full() {
@@ -81,13 +86,15 @@ for src in "$SOURCE_DIR"/*; do
   if is_video "$base"; then
     full="$FULL_DIR/$id.mp4"
     ssim="$(seam_ssim "$src")"
+    dur="$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$src")"
+    xlen="$(crossfade_len_for "$dur")"
     need_x="$(LC_ALL=C awk -v s="$ssim" -v t="$SEAM_SSIM_THRESHOLD" 'BEGIN{print (s+0 < t)?1:0}')"
     if [[ "$need_x" == "1" ]]; then
-      make_seamless_full "$src" "$full"
-      printf 'crossfade  (seam %s): %s\n' "$ssim" "$id" >&2
+      make_seamless_full "$src" "$full" "$xlen"
+      printf 'crossfade x=%s (seam %s): %s\n' "$xlen" "$ssim" "$id" >&2
     else
       copy_full "$src" "$full"
-      printf 'kept       (seam %s): %s\n' "$ssim" "$id" >&2
+      printf 'kept          (seam %s): %s\n' "$ssim" "$id" >&2
     fi
     make_video_preview "$full" "$PREVIEW_DIR/$id.mp4"
     make_video_poster "$full" "$PREVIEW_DIR/$id.jpg"
