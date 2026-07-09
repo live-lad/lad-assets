@@ -10,13 +10,15 @@ Consumido pela feature SPEC-141 (Selectable Terminal Backgrounds): o app lê `ma
 lad-assets/
   manifest.json          # fonte da lista (gerado pelo script, não editar à mão)
   labels.json            # nomes exibíveis opcionais (id -> "Nome pt-BR")
-  full/<nome>.<ext>      # asset em resolução cheia (imagem ou vídeo)
-  preview/<nome>.<ext>   # miniatura/loop menor gerado (mesmo <nome> do full)
+  source/<nome>.<ext>    # ENTRADA: arquivos crus curados (imagem ou vídeo)
+  full/<nome>.<ext>      # SAÍDA gerada: asset servido (vídeo com loop seamless)
+  preview/<nome>.<ext>   # SAÍDA gerada: miniatura/loop menor + poster
   scripts/generate-previews.sh
 ```
 
-- `full/` — você coloca os arquivos aqui (5 vídeos + 5 imagens no v1).
-- `preview/` — gerado pelo script: para vídeo, um loop menor `.mp4` + um poster `.jpg`; para imagem, uma versão menor `.jpg`.
+- `source/` — você coloca os arquivos crus aqui. É a única pasta de entrada.
+- `full/` — gerado pelo script. Para vídeo, o loop é fechado por crossfade quando a costura é visível (SSIM primeiro↔último frame < 0.7); clipes já bem fechados são só remuxados. É este arquivo que o app baixa e aplica como background.
+- `preview/` — gerado pelo script: para vídeo, um loop menor `.mp4` (herda o loop seamless do full) + um poster `.jpg`; para imagem, uma versão menor `.jpg`.
 - O nome do arquivo vira o `id` do asset. O rótulo exibido é derivado do nome (`ondas-do-mar.mp4` → "Ondas Do Mar"); para controlar o texto em pt-BR, mapeie em `labels.json` (ex.: `{ "ondas-do-mar": "Ondas do mar" }`).
 
 ## Servindo
@@ -26,13 +28,13 @@ lad-assets/
 
 ## Gerar previews e manifesto
 
-Depois de colocar os arquivos em `full/`:
+Depois de colocar os arquivos em `source/`:
 
 ```
 bash scripts/generate-previews.sh
 ```
 
-O script recria `preview/` e `manifest.json` a partir do conteúdo de `full/`. A `version` de cada asset é o hash do arquivo full — trocar o arquivo invalida o cache no app automaticamente.
+O script recria `full/`, `preview/` e `manifest.json` a partir do conteúdo de `source/` (idempotente). A `version` de cada asset é o hash do arquivo full gerado — trocar o source invalida o cache no app automaticamente.
 
 ## Licença dos assets
 
