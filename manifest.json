@@ -2,6 +2,15 @@
   "schemaVersion": 1,
   "assets": [
     {
+      "id": "185366-875417525_small",
+      "type": "video",
+      "name": "185366 875417525 Small",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/185366-875417525_small.mp4?v=98c91e39",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/185366-875417525_small.mp4?v=98c91e39",
+      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/185366-875417525_small.jpg?v=98c91e39",
+      "version": "98c91e39"
+    },
+    {
       "id": "263803_small",
       "type": "video",
       "name": "263803 Small",
@@ -29,6 +38,15 @@
       "version": "98c342a9"
     },
     {
+      "id": "334400_small",
+      "type": "video",
+      "name": "334400 Small",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/334400_small.mp4?v=88a9c8a2",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/334400_small.mp4?v=88a9c8a2",
+      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/334400_small.jpg?v=88a9c8a2",
+      "version": "88a9c8a2"
+    },
+    {
       "id": "338847_small",
       "type": "video",
       "name": "338847 Small",
@@ -36,6 +54,15 @@
       "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/338847_small.mp4?v=48a517fe",
       "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/338847_small.jpg?v=48a517fe",
       "version": "48a517fe"
+    },
+    {
+      "id": "344790",
+      "type": "video",
+      "name": "344790",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/344790.mp4?v=8922166f",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/344790.mp4?v=8922166f",
+      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/344790.jpg?v=8922166f",
+      "version": "8922166f"
     },
     {
       "id": "344801",
@@ -63,6 +90,24 @@
       "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/344809.mp4?v=dc1352df",
       "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/344809.jpg?v=dc1352df",
       "version": "dc1352df"
+    },
+    {
+      "id": "352344_small",
+      "type": "video",
+      "name": "352344 Small",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/352344_small.mp4?v=4bdf4c1a",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/352344_small.mp4?v=4bdf4c1a",
+      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/352344_small.jpg?v=4bdf4c1a",
+      "version": "4bdf4c1a"
+    },
+    {
+      "id": "67849-523396000_small",
+      "type": "video",
+      "name": "67849 523396000 Small",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/67849-523396000_small.mp4?v=df2d5bb0",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/67849-523396000_small.mp4?v=df2d5bb0",
+      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/67849-523396000_small.jpg?v=df2d5bb0",
+      "version": "df2d5bb0"
     }
   ]
 }
