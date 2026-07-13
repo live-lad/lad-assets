@@ -117,6 +117,15 @@
       "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/91562-629172467.mp4?v=4fd2f16f",
       "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/91562-629172467.jpg?v=4fd2f16f",
       "version": "4fd2f16f"
+    },
+    {
+      "id": "337559_small",
+      "type": "video",
+      "name": "337559 Small",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/337559_small.mp4?v=808ed8a2",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/337559_small.mp4?v=808ed8a2",
+      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/337559_small.jpg?v=808ed8a2",
+      "version": "808ed8a2"
     }
   ]
 }
