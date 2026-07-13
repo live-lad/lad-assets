@@ -13,6 +13,9 @@ PREVIEW_WIDTH=640
 IMAGE_PREVIEW_WIDTH=1280
 CROSSFADE_SECONDS=1.0
 SEAM_SSIM_THRESHOLD=0.99
+FULL_MAX_MB=20
+FULL_TARGET_MB=18
+FULL_MAX_HEIGHT=1080
 
 is_video() { case "${1,,}" in *.mp4 | *.webm | *.mov | *.mkv) return 0 ;; *) return 1 ;; esac; }
 is_image() { case "${1,,}" in *.jpg | *.jpeg | *.png | *.webp) return 0 ;; *) return 1 ;; esac; }
@@ -41,12 +44,34 @@ seam_ssim() {
   printf '%s' "${s:-1}"
 }
 
+downscale_filter() { printf "scale=-2:'min(ih\\,%d)':flags=lanczos" "$FULL_MAX_HEIGHT"; }
+
+full_exceeds_limit() { [[ "$(stat -c%s "$1")" -gt $((FULL_MAX_MB * 1024 * 1024)) ]]; }
+
+bitrate_for_target() {
+  LC_ALL=C awk -v d="$1" -v mb="$FULL_TARGET_MB" 'BEGIN{printf "%d", (mb*8192/d)-64}'
+}
+
+cap_full_size() {
+  local full="$1" d kbps tmp log
+  full_exceeds_limit "$full" || return 0
+  d="$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$full")"
+  kbps="$(bitrate_for_target "$d")"
+  tmp="$(mktemp -u).mp4"
+  log="$(mktemp -u)"
+  ffmpeg -y -i "$full" -an -c:v libx264 -preset slow -b:v "${kbps}k" -pass 1 -passlogfile "$log" -pix_fmt yuv420p -f mp4 /dev/null </dev/null >/dev/null 2>&1
+  ffmpeg -y -i "$full" -an -c:v libx264 -preset slow -b:v "${kbps}k" -pass 2 -passlogfile "$log" -pix_fmt yuv420p -movflags +faststart "$tmp" </dev/null >/dev/null 2>&1
+  mv -f "$tmp" "$full"
+  rm -f "${log}"* 2>/dev/null || true
+  printf '  capped ~%sMB @%dkbps: %s\n' "$FULL_TARGET_MB" "$kbps" "$(basename "$full")" >&2
+}
+
 make_seamless_full() {
   local src="$1" out="$2" x="$3" d off
   d="$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$src")"
   off="$(LC_ALL=C awk -v d="$d" -v x="$x" 'BEGIN{printf "%.3f", d-2*x}')"
   ffmpeg -y -i "$src" -filter_complex \
-    "[0]split[main][pre];[pre]trim=0:${x},setpts=PTS-STARTPTS[pre2];[main]trim=${x}:${d},setpts=PTS-STARTPTS[main2];[main2][pre2]xfade=transition=fade:duration=${x}:offset=${off},format=yuv420p[v]" \
+    "[0]split[main][pre];[pre]trim=0:${x},setpts=PTS-STARTPTS[pre2];[main]trim=${x}:${d},setpts=PTS-STARTPTS[main2];[main2][pre2]xfade=transition=fade:duration=${x}:offset=${off},$(downscale_filter),format=yuv420p[v]" \
     -map "[v]" -an -c:v libx264 -preset veryfast -crf 20 -pix_fmt yuv420p -movflags +faststart "$out" </dev/null >/dev/null 2>&1
 }
 
@@ -55,8 +80,14 @@ crossfade_len_for() {
   LC_ALL=C awk -v d="$d" -v x="$CROSSFADE_SECONDS" 'BEGIN{m=d/3.0; if (x<m) print x; else printf "%.3f", m}'
 }
 
-copy_full() {
-  ffmpeg -y -i "$1" -an -c:v copy -movflags +faststart "$2" </dev/null >/dev/null 2>&1
+make_plain_full() {
+  local src="$1" out="$2" h
+  h="$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$src")"
+  if [[ "${h:-0}" -le "$FULL_MAX_HEIGHT" ]]; then
+    ffmpeg -y -i "$src" -an -c:v copy -movflags +faststart "$out" </dev/null >/dev/null 2>&1
+  else
+    ffmpeg -y -i "$src" -an -vf "$(downscale_filter),format=yuv420p" -c:v libx264 -preset veryfast -crf 20 -pix_fmt yuv420p -movflags +faststart "$out" </dev/null >/dev/null 2>&1
+  fi
 }
 
 make_video_preview() {
@@ -93,9 +124,10 @@ for src in "$SOURCE_DIR"/*; do
       make_seamless_full "$src" "$full" "$xlen"
       printf 'crossfade x=%s (seam %s): %s\n' "$xlen" "$ssim" "$id" >&2
     else
-      copy_full "$src" "$full"
+      make_plain_full "$src" "$full"
       printf 'kept          (seam %s): %s\n' "$ssim" "$id" >&2
     fi
+    cap_full_size "$full"
     make_video_preview "$full" "$PREVIEW_DIR/$id.mp4"
     make_video_poster "$full" "$PREVIEW_DIR/$id.jpg"
     ver="$(version_for "$full")"
@@ -106,6 +138,9 @@ for src in "$SOURCE_DIR"/*; do
     cp -f "$src" "$full"
     make_image_preview "$full" "$PREVIEW_DIR/$id.jpg"
     ver="$(version_for "$full")"
+    if full_exceeds_limit "$full"; then
+      printf 'AVISO: imagem %s tem >%sMB; jsDelivr recusa, reduza o arquivo\n' "$id" "$FULL_MAX_MB" >&2
+    fi
     printf 'image             : %s\n' "$id" >&2
     asset="$(jq -n --arg id "$id" --arg name "$name" --arg ver "$ver" --arg base "$BASE_URL" --arg ext "$ext" \
       '{id:$id,type:"image",name:$name,preview:($base+"/preview/"+$id+".jpg?v="+$ver),full:($base+"/full/"+$id+"."+$ext+"?v="+$ver),version:$ver}')"
