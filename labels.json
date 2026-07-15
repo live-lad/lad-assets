@@ -1,1 +1,16 @@
-{}
+{
+  "birds": "Pássaros",
+  "boat": "Barco",
+  "city": "Cidade",
+  "coffee-shop": "Cafeteria",
+  "fireplace": "Lareira",
+  "pink-noise": "Ruído rosa",
+  "rain": "Chuva",
+  "storm": "Tempestade",
+  "stream": "Riacho",
+  "summer-night": "Noite de verão",
+  "train": "Trem",
+  "waves": "Ondas",
+  "white-noise": "Ruído branco",
+  "wind": "Vento"
+}

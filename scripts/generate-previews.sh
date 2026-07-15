@@ -19,8 +19,16 @@ FULL_MAX_HEIGHT=1080
 
 is_video() { case "${1,,}" in *.mp4 | *.webm | *.mov | *.mkv) return 0 ;; *) return 1 ;; esac; }
 is_image() { case "${1,,}" in *.jpg | *.jpeg | *.png | *.webp) return 0 ;; *) return 1 ;; esac; }
+is_audio() { case "${1,,}" in *.mp3 | *.ogg | *.wav | *.m4a | *.flac | *.opus) return 0 ;; *) return 1 ;; esac; }
 
 version_for() { sha1sum "$1" | cut -c1-8; }
+
+LICENSES_FILE="$REPO_DIR/licenses.json"
+license_for() {
+  local id="$1"
+  [[ -f "$LICENSES_FILE" ]] || { printf ''; return; }
+  jq -r --arg id "$id" '.[$id] // empty' "$LICENSES_FILE"
+}
 
 label_for() {
   local id="$1" mapped
@@ -144,6 +152,17 @@ for src in "$SOURCE_DIR"/*; do
     printf 'image             : %s\n' "$id" >&2
     asset="$(jq -n --arg id "$id" --arg name "$name" --arg ver "$ver" --arg base "$BASE_URL" --arg ext "$ext" \
       '{id:$id,type:"image",name:$name,preview:($base+"/preview/"+$id+".jpg?v="+$ver),full:($base+"/full/"+$id+"."+$ext+"?v="+$ver),version:$ver}')"
+  elif is_audio "$base"; then
+    full="$FULL_DIR/$id.mp3"
+    ffmpeg -y -i "$src" -vn -c:a libmp3lame -q:a 4 "$full" </dev/null >/dev/null 2>&1
+    ver="$(version_for "$full")"
+    lic="$(license_for "$id")"
+    if full_exceeds_limit "$full"; then
+      printf 'AVISO: audio %s tem >%sMB; jsDelivr recusa, reduza o bitrate\n' "$id" "$FULL_MAX_MB" >&2
+    fi
+    printf 'audio             : %s\n' "$id" >&2
+    asset="$(jq -n --arg id "$id" --arg name "$name" --arg ver "$ver" --arg base "$BASE_URL" --arg lic "$lic" \
+      '{id:$id,type:"sound",name:$name,icon:$id,full:($base+"/full/"+$id+".mp3?v="+$ver),license:$lic,version:$ver}')"
   else
     printf 'skip (unknown type): %s\n' "$base" >&2
     continue

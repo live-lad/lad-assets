@@ -126,6 +126,132 @@
       "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/91562-629172467.mp4?v=c3e720b2",
       "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/91562-629172467.jpg?v=c3e720b2",
       "version": "c3e720b2"
+    },
+    {
+      "id": "birds",
+      "type": "sound",
+      "name": "Pássaros",
+      "icon": "birds",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/birds.mp3?v=891c17a0",
+      "license": "CC0",
+      "version": "891c17a0"
+    },
+    {
+      "id": "boat",
+      "type": "sound",
+      "name": "Barco",
+      "icon": "boat",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/boat.mp3?v=cfefd5cf",
+      "license": "CC0",
+      "version": "cfefd5cf"
+    },
+    {
+      "id": "city",
+      "type": "sound",
+      "name": "Cidade",
+      "icon": "city",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/city.mp3?v=29bea205",
+      "license": "CC BY",
+      "version": "29bea205"
+    },
+    {
+      "id": "coffee-shop",
+      "type": "sound",
+      "name": "Cafeteria",
+      "icon": "coffee-shop",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/coffee-shop.mp3?v=3d2900d1",
+      "license": "DP",
+      "version": "3d2900d1"
+    },
+    {
+      "id": "fireplace",
+      "type": "sound",
+      "name": "Lareira",
+      "icon": "fireplace",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/fireplace.mp3?v=af9bcc77",
+      "license": "DP",
+      "version": "af9bcc77"
+    },
+    {
+      "id": "pink-noise",
+      "type": "sound",
+      "name": "Ruído rosa",
+      "icon": "pink-noise",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/pink-noise.mp3?v=341c367c",
+      "license": "CC BY-SA",
+      "version": "341c367c"
+    },
+    {
+      "id": "rain",
+      "type": "sound",
+      "name": "Chuva",
+      "icon": "rain",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/rain.mp3?v=bf75ecf1",
+      "license": "CC BY",
+      "version": "bf75ecf1"
+    },
+    {
+      "id": "storm",
+      "type": "sound",
+      "name": "Tempestade",
+      "icon": "storm",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/storm.mp3?v=48c4beac",
+      "license": "CC BY",
+      "version": "48c4beac"
+    },
+    {
+      "id": "stream",
+      "type": "sound",
+      "name": "Riacho",
+      "icon": "stream",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/stream.mp3?v=9e4181c7",
+      "license": "CC0",
+      "version": "9e4181c7"
+    },
+    {
+      "id": "summer-night",
+      "type": "sound",
+      "name": "Noite de verão",
+      "icon": "summer-night",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/summer-night.mp3?v=67bb0520",
+      "license": "DP",
+      "version": "67bb0520"
+    },
+    {
+      "id": "train",
+      "type": "sound",
+      "name": "Trem",
+      "icon": "train",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/train.mp3?v=c3b5a741",
+      "license": "CC BY",
+      "version": "c3b5a741"
+    },
+    {
+      "id": "waves",
+      "type": "sound",
+      "name": "Ondas",
+      "icon": "waves",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/waves.mp3?v=82debe9a",
+      "license": "CC BY",
+      "version": "82debe9a"
+    },
+    {
+      "id": "white-noise",
+      "type": "sound",
+      "name": "Ruído branco",
+      "icon": "white-noise",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/white-noise.mp3?v=d1d6871f",
+      "license": "CC BY-SA",
+      "version": "d1d6871f"
+    },
+    {
+      "id": "wind",
+      "type": "sound",
+      "name": "Vento",
+      "icon": "wind",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/wind.mp3?v=7f058a77",
+      "license": "CC0",
+      "version": "7f058a77"
     }
   ]
 }
