@@ -252,6 +252,42 @@
       "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/wind.mp3?v=7f058a77",
       "license": "CC0",
       "version": "7f058a77"
+    },
+    {
+      "id": "201947-916877801_small",
+      "type": "video",
+      "name": "201947 916877801 Small",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/201947-916877801_small.mp4?v=1a2d0993",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/201947-916877801_small.mp4?v=1a2d0993",
+      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/201947-916877801_small.jpg?v=1a2d0993",
+      "version": "1a2d0993"
+    },
+    {
+      "id": "225414_medium",
+      "type": "video",
+      "name": "225414 Medium",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/225414_medium.mp4?v=ca243c67",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/225414_medium.mp4?v=ca243c67",
+      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/225414_medium.jpg?v=ca243c67",
+      "version": "ca243c67"
+    },
+    {
+      "id": "291854_small",
+      "type": "video",
+      "name": "291854 Small",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/291854_small.mp4?v=462eec1e",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/291854_small.mp4?v=462eec1e",
+      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/291854_small.jpg?v=462eec1e",
+      "version": "462eec1e"
+    },
+    {
+      "id": "338681_small",
+      "type": "video",
+      "name": "338681 Small",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/338681_small.mp4?v=55ab8a42",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/338681_small.mp4?v=55ab8a42",
+      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/338681_small.jpg?v=55ab8a42",
+      "version": "55ab8a42"
     }
   ]
 }
