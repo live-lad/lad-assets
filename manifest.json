@@ -74,15 +74,6 @@
       "version": "55ab8a42"
     },
     {
-      "id": "344790",
-      "type": "video",
-      "name": "344790",
-      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/344790.mp4?v=0ec65775",
-      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/344790.mp4?v=0ec65775",
-      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/344790.jpg?v=0ec65775",
-      "version": "0ec65775"
-    },
-    {
       "id": "344801",
       "type": "video",
       "name": "344801",
@@ -90,15 +81,6 @@
       "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/344801.mp4?v=a607924d",
       "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/344801.jpg?v=a607924d",
       "version": "a607924d"
-    },
-    {
-      "id": "344807",
-      "type": "video",
-      "name": "344807",
-      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/344807.mp4?v=694c0697",
-      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/344807.mp4?v=694c0697",
-      "poster": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/344807.jpg?v=694c0697",
-      "version": "694c0697"
     },
     {
       "id": "344809",
