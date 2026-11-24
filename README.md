@@ -11,7 +11,7 @@ lad-assets/
   manifest.json          # fonte da lista (gerado pelo script, não editar à mão)
   labels.json            # nomes exibíveis opcionais (id -> "Nome pt-BR")
   licenses.json          # licença por som (id -> "CC BY" | "CC0" | ...); usado só p/ áudio
-  presets.json           # presets de cena (gerador + params), proveniência das cenas SVG e ordem de exibição
+  presets.json           # presets de cena (gerador + params, licença e atribuição) e ordem de exibição
   LICENSES/              # textos de licença MIT das fontes das cenas
   source/<nome>.<ext>    # ENTRADA: arquivos crus curados (imagem, vídeo ou áudio)
   full/<nome>.<ext>      # SAÍDA gerada: asset servido (vídeo loop seamless / imagem / áudio mp3)
@@ -76,7 +76,7 @@ O script recria `full/`, `preview/` e `manifest.json` a partir do conteúdo de `
 
 Dois tipos aditivos de entrada no manifesto (`schemaVersion` continua 1; clients antigos descartam tipos desconhecidos):
 
-- `scene`: SVG pronto em `source/<id>.svg`. O script copia para `full/` e `preview/`, versiona pelo hash do conteúdo e recusa arquivo com 131.072 caracteres ou mais (limite do app). `license` e `attribution` vêm de `scenes.<id>` em `presets.json`. Os SVGs de `scene-code-rain` e `scene-snow-cabin` são produzidos pelo export do app (`node scripts/export-static-scenes.ts <dir>` no repo do LAD), nunca editados à mão.
+- `scene`: SVG pronto em `source/<id>.svg`. O script copia para `full/` e `preview/`, versiona pelo hash do conteúdo e recusa arquivo com 131.072 caracteres ou mais (limite do app). `license` e `attribution` vêm de `scenes.<id>` em `presets.json`. Nenhuma cena em uso é `scene` hoje: `code-rain` e `snow-cabin` viraram presets para o app desenhar na proporção da área do terminal.
 - `preset`: gerador do app + parâmetros, sem arquivo a baixar. Declarado em `presets.json` (`id`, `generator`, `minGeneratorVersion`, `params`, `license`, `attribution`); a `version` é o hash de `generator`, `minGeneratorVersion` e `params`. O gerador vive no bundle do app: id desconhecido ou versão mínima maior que a do app faz o app ignorar o preset.
 
 `presets.json` também traz `order` (ids na ordem em que as cenas aparecem no manifesto, fundamentais primeiro). Os nomes em pt-BR ficam em `labels.json`. Os textos de licença MIT das fontes (`anhnt256/claude-code-themes` e `PerspicaciousGuy/ClaudeCodeThemes`) estão em `LICENSES/`.

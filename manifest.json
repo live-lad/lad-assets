@@ -292,11 +292,12 @@
     },
     {
       "id": "scene-code-rain",
-      "type": "scene",
+      "type": "preset",
       "name": "Chuva de código",
-      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/scene-code-rain.svg?v=0b65127d",
-      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/scene-code-rain.svg?v=0b65127d",
-      "version": "0b65127d",
+      "generator": "code-rain",
+      "minGeneratorVersion": 1,
+      "params": {},
+      "version": "d4fe7add",
       "license": "MIT",
       "attribution": "PerspicaciousGuy/ClaudeCodeThemes"
     },
@@ -377,11 +378,12 @@
     },
     {
       "id": "scene-snow-cabin",
-      "type": "scene",
+      "type": "preset",
       "name": "Cabana na neve",
-      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/scene-snow-cabin.svg?v=3576ad03",
-      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/scene-snow-cabin.svg?v=3576ad03",
-      "version": "3576ad03",
+      "generator": "snow-cabin",
+      "minGeneratorVersion": 1,
+      "params": {},
+      "version": "885a414d",
       "license": "MIT",
       "attribution": "PerspicaciousGuy/ClaudeCodeThemes"
     }

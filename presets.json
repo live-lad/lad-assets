@@ -11,18 +11,16 @@
     "scene-campfire",
     "scene-snow-cabin"
   ],
-  "scenes": {
-    "scene-code-rain": { "license": "MIT", "attribution": "PerspicaciousGuy/ClaudeCodeThemes" },
-    "scene-snow-cabin": { "license": "MIT", "attribution": "PerspicaciousGuy/ClaudeCodeThemes" }
-  },
   "presets": [
     { "id": "scene-snow-rise", "generator": "snow-rise", "minGeneratorVersion": 1, "params": { "density": 0.5, "speed": 0.5, "n": 1 }, "license": "MIT", "attribution": "anhnt256/claude-code-themes" },
     { "id": "scene-weather-mood", "generator": "weather-mood", "minGeneratorVersion": 1, "params": {}, "license": "MIT", "attribution": "PerspicaciousGuy/ClaudeCodeThemes" },
     { "id": "scene-meadow-hours", "generator": "meadow-hours", "minGeneratorVersion": 1, "params": {}, "license": "MIT", "attribution": "PerspicaciousGuy/ClaudeCodeThemes" },
+    { "id": "scene-code-rain", "generator": "code-rain", "minGeneratorVersion": 1, "params": {}, "license": "MIT", "attribution": "PerspicaciousGuy/ClaudeCodeThemes" },
     { "id": "scene-stars", "generator": "recipe", "minGeneratorVersion": 1, "params": { "scene": "stars", "density": 0.5, "speed": 0.5, "n": 1 }, "license": "MIT", "attribution": "anhnt256/claude-code-themes" },
     { "id": "scene-aurora", "generator": "recipe", "minGeneratorVersion": 1, "params": { "scene": "aurora", "density": 0.5, "speed": 0.5, "n": 1 }, "license": "MIT", "attribution": "anhnt256/claude-code-themes" },
     { "id": "scene-rain", "generator": "recipe", "minGeneratorVersion": 1, "params": { "scene": "rain", "density": 0.5, "speed": 0.5, "n": 1 }, "license": "MIT", "attribution": "anhnt256/claude-code-themes" },
     { "id": "scene-koi", "generator": "recipe", "minGeneratorVersion": 1, "params": { "scene": "koi", "density": 0.5, "speed": 0.5, "n": 1 }, "license": "MIT", "attribution": "anhnt256/claude-code-themes" },
-    { "id": "scene-campfire", "generator": "campfire", "minGeneratorVersion": 1, "params": {}, "license": "MIT", "attribution": "PerspicaciousGuy/ClaudeCodeThemes" }
+    { "id": "scene-campfire", "generator": "campfire", "minGeneratorVersion": 1, "params": {}, "license": "MIT", "attribution": "PerspicaciousGuy/ClaudeCodeThemes" },
+    { "id": "scene-snow-cabin", "generator": "snow-cabin", "minGeneratorVersion": 1, "params": {}, "license": "MIT", "attribution": "PerspicaciousGuy/ClaudeCodeThemes" }
   ]
 }
