@@ -12,5 +12,15 @@
   "train": "Trem",
   "waves": "Ondas",
   "white-noise": "Ruído branco",
-  "wind": "Vento"
+  "wind": "Vento",
+  "scene-snow-rise": "Neve que sobe",
+  "scene-weather-mood": "Clima do turno",
+  "scene-meadow-hours": "Campina das horas",
+  "scene-code-rain": "Chuva de código",
+  "scene-stars": "Estrelas",
+  "scene-aurora": "Aurora",
+  "scene-rain": "Chuva",
+  "scene-koi": "Lago de carpas",
+  "scene-campfire": "Fogueira",
+  "scene-snow-cabin": "Cabana na neve"
 }

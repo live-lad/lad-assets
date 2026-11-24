@@ -19,10 +19,13 @@ FULL_MAX_HEIGHT=1080
 
 is_video() { case "${1,,}" in *.mp4 | *.webm | *.mov | *.mkv) return 0 ;; *) return 1 ;; esac; }
 is_image() { case "${1,,}" in *.jpg | *.jpeg | *.png | *.webp) return 0 ;; *) return 1 ;; esac; }
+is_svg() { case "${1,,}" in *.svg) return 0 ;; *) return 1 ;; esac; }
 is_audio() { case "${1,,}" in *.mp3 | *.ogg | *.wav | *.m4a | *.flac | *.opus) return 0 ;; *) return 1 ;; esac; }
 
 version_for() { sha1sum "$1" | cut -c1-8; }
 
+PRESETS_FILE="$REPO_DIR/presets.json"
+SCENE_MAX_CHARS=131072
 LICENSES_FILE="$REPO_DIR/licenses.json"
 license_for() {
   local id="$1"
@@ -40,6 +43,12 @@ label_for() {
     fi
   fi
   printf '%s' "$id" | tr -- '-_' '  ' | awk '{for(i=1;i<=NF;i++){$i=toupper(substr($i,1,1)) substr($i,2)}; print}'
+}
+
+scene_field_for() {
+  local id="$1" field="$2"
+  [[ -f "$PRESETS_FILE" ]] || { printf ''; return; }
+  jq -r --arg id "$id" --arg field "$field" '.scenes[$id][$field] // empty' "$PRESETS_FILE"
 }
 
 seam_ssim() {
@@ -152,6 +161,23 @@ for src in "$SOURCE_DIR"/*; do
     printf 'image             : %s\n' "$id" >&2
     asset="$(jq -n --arg id "$id" --arg name "$name" --arg ver "$ver" --arg base "$BASE_URL" --arg ext "$ext" \
       '{id:$id,type:"image",name:$name,preview:($base+"/preview/"+$id+".jpg?v="+$ver),full:($base+"/full/"+$id+"."+$ext+"?v="+$ver),version:$ver}')"
+  elif is_svg "$base"; then
+    full="$FULL_DIR/$id.svg"
+    chars="$(wc -m <"$src")"
+    if [[ "$chars" -ge "$SCENE_MAX_CHARS" ]]; then
+      printf 'ERRO: cena %s tem %s caracteres (limite %s); o app a recusa\n' "$id" "$chars" "$SCENE_MAX_CHARS" >&2
+      exit 1
+    fi
+    cp -f "$src" "$full"
+    cp -f "$src" "$PREVIEW_DIR/$id.svg"
+    ver="$(version_for "$full")"
+    lic="$(scene_field_for "$id" license)"
+    attr="$(scene_field_for "$id" attribution)"
+    printf 'scene             : %s\n' "$id" >&2
+    asset="$(jq -n --arg id "$id" --arg name "$name" --arg ver "$ver" --arg base "$BASE_URL" --arg lic "$lic" --arg attr "$attr" \
+      '{id:$id,type:"scene",name:$name,preview:($base+"/preview/"+$id+".svg?v="+$ver),full:($base+"/full/"+$id+".svg?v="+$ver),version:$ver}
+        + (if $lic != "" then {license:$lic} else {} end)
+        + (if $attr != "" then {attribution:$attr} else {} end)')"
   elif is_audio "$base"; then
     full="$FULL_DIR/$id.mp3"
     ffmpeg -y -i "$src" -vn -c:a libmp3lame -q:a 4 "$full" </dev/null >/dev/null 2>&1
@@ -170,6 +196,29 @@ for src in "$SOURCE_DIR"/*; do
 
   assets="$(jq --argjson a "$asset" '. + [$a]' <<<"$assets")"
 done
+
+preset_entry() {
+  local entry="$1" id name ver
+  id="$(jq -r '.id' <<<"$entry")"
+  name="$(label_for "$id")"
+  ver="$(jq -cS '{generator,minGeneratorVersion,params}' <<<"$entry" | sha1sum | cut -c1-8)"
+  jq -n --argjson e "$entry" --arg name "$name" --arg ver "$ver" \
+    '{id:$e.id,type:"preset",name:$name,generator:$e.generator,minGeneratorVersion:($e.minGeneratorVersion // 1),params:$e.params,version:$ver}
+      + (if ($e.license // "") != "" then {license:$e.license} else {} end)
+      + (if ($e.attribution // "") != "" then {attribution:$e.attribution} else {} end)'
+}
+
+if [[ -f "$PRESETS_FILE" ]]; then
+  while IFS= read -r entry; do
+    printf 'preset            : %s\n' "$(jq -r '.id' <<<"$entry")" >&2
+    assets="$(jq --argjson a "$(preset_entry "$entry")" '. + [$a]' <<<"$assets")"
+  done < <(jq -c '.presets[]' "$PRESETS_FILE")
+  assets="$(jq --slurpfile p "$PRESETS_FILE" '
+    ($p[0].order // []) as $order
+    | (map(select(.type == "scene" or .type == "preset"))
+        | sort_by(.id as $id | ($order | index($id)) // ($order | length))) as $ordered
+    | (map(select(.type != "scene" and .type != "preset"))) + $ordered' <<<"$assets")"
+fi
 
 jq -n --argjson assets "$assets" '{schemaVersion:1, assets:$assets}' >"$MANIFEST_FILE"
 printf 'manifest: %s (%s assets)\n' "$MANIFEST_FILE" "$(jq '.assets|length' "$MANIFEST_FILE")"

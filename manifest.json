@@ -252,6 +252,138 @@
       "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/wind.mp3?v=7f058a77",
       "license": "CC0",
       "version": "7f058a77"
+    },
+    {
+      "id": "scene-snow-rise",
+      "type": "preset",
+      "name": "Neve que sobe",
+      "generator": "snow-rise",
+      "minGeneratorVersion": 1,
+      "params": {
+        "density": 0.5,
+        "speed": 0.5,
+        "n": 1
+      },
+      "version": "639eeeb3",
+      "license": "MIT",
+      "attribution": "anhnt256/claude-code-themes"
+    },
+    {
+      "id": "scene-weather-mood",
+      "type": "preset",
+      "name": "Clima do turno",
+      "generator": "weather-mood",
+      "minGeneratorVersion": 1,
+      "params": {},
+      "version": "7b37cb49",
+      "license": "MIT",
+      "attribution": "PerspicaciousGuy/ClaudeCodeThemes"
+    },
+    {
+      "id": "scene-meadow-hours",
+      "type": "preset",
+      "name": "Campina das horas",
+      "generator": "meadow-hours",
+      "minGeneratorVersion": 1,
+      "params": {},
+      "version": "5e67a71b",
+      "license": "MIT",
+      "attribution": "PerspicaciousGuy/ClaudeCodeThemes"
+    },
+    {
+      "id": "scene-code-rain",
+      "type": "scene",
+      "name": "Chuva de código",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/scene-code-rain.svg?v=0b65127d",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/scene-code-rain.svg?v=0b65127d",
+      "version": "0b65127d",
+      "license": "MIT",
+      "attribution": "PerspicaciousGuy/ClaudeCodeThemes"
+    },
+    {
+      "id": "scene-stars",
+      "type": "preset",
+      "name": "Estrelas",
+      "generator": "recipe",
+      "minGeneratorVersion": 1,
+      "params": {
+        "scene": "stars",
+        "density": 0.5,
+        "speed": 0.5,
+        "n": 1
+      },
+      "version": "eee000c6",
+      "license": "MIT",
+      "attribution": "anhnt256/claude-code-themes"
+    },
+    {
+      "id": "scene-aurora",
+      "type": "preset",
+      "name": "Aurora",
+      "generator": "recipe",
+      "minGeneratorVersion": 1,
+      "params": {
+        "scene": "aurora",
+        "density": 0.5,
+        "speed": 0.5,
+        "n": 1
+      },
+      "version": "44337197",
+      "license": "MIT",
+      "attribution": "anhnt256/claude-code-themes"
+    },
+    {
+      "id": "scene-rain",
+      "type": "preset",
+      "name": "Chuva",
+      "generator": "recipe",
+      "minGeneratorVersion": 1,
+      "params": {
+        "scene": "rain",
+        "density": 0.5,
+        "speed": 0.5,
+        "n": 1
+      },
+      "version": "32dffac6",
+      "license": "MIT",
+      "attribution": "anhnt256/claude-code-themes"
+    },
+    {
+      "id": "scene-koi",
+      "type": "preset",
+      "name": "Lago de carpas",
+      "generator": "recipe",
+      "minGeneratorVersion": 1,
+      "params": {
+        "scene": "koi",
+        "density": 0.5,
+        "speed": 0.5,
+        "n": 1
+      },
+      "version": "b6b3e540",
+      "license": "MIT",
+      "attribution": "anhnt256/claude-code-themes"
+    },
+    {
+      "id": "scene-campfire",
+      "type": "preset",
+      "name": "Fogueira",
+      "generator": "campfire",
+      "minGeneratorVersion": 1,
+      "params": {},
+      "version": "6963b794",
+      "license": "MIT",
+      "attribution": "PerspicaciousGuy/ClaudeCodeThemes"
+    },
+    {
+      "id": "scene-snow-cabin",
+      "type": "scene",
+      "name": "Cabana na neve",
+      "preview": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/preview/scene-snow-cabin.svg?v=3576ad03",
+      "full": "https://cdn.jsdelivr.net/gh/live-lad/lad-assets@main/full/scene-snow-cabin.svg?v=3576ad03",
+      "version": "3576ad03",
+      "license": "MIT",
+      "attribution": "PerspicaciousGuy/ClaudeCodeThemes"
     }
   ]
 }

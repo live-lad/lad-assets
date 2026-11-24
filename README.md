@@ -1,6 +1,6 @@
 # lad-assets
 
-Catálogo público de assets para o terminal do LAD / live-code-ui: **backgrounds** (imagens e vídeos em loop) e **sons ambientes** (áudio em loop, feature Ambience).
+Catálogo público de assets para o terminal do LAD / live-code-ui: **backgrounds** (imagens, vídeos em loop e cenas SVG animadas) e **sons ambientes** (áudio em loop, feature Ambience).
 
 Consumido pelo app: ele lê `manifest.json`, exibe os assets num picker (grid de backgrounds + mixer de sons) e baixa o `full` sob demanda, cacheando localmente. Backgrounds vêm da SPEC-141; os sons `type: "sound"` da SPEC-149 (Ambience).
 
@@ -11,6 +11,8 @@ lad-assets/
   manifest.json          # fonte da lista (gerado pelo script, não editar à mão)
   labels.json            # nomes exibíveis opcionais (id -> "Nome pt-BR")
   licenses.json          # licença por som (id -> "CC BY" | "CC0" | ...); usado só p/ áudio
+  presets.json           # presets de cena (gerador + params), proveniência das cenas SVG e ordem de exibição
+  LICENSES/              # textos de licença MIT das fontes das cenas
   source/<nome>.<ext>    # ENTRADA: arquivos crus curados (imagem, vídeo ou áudio)
   full/<nome>.<ext>      # SAÍDA gerada: asset servido (vídeo loop seamless / imagem / áudio mp3)
   preview/<nome>.<ext>   # SAÍDA gerada: miniatura/loop menor + poster (só vídeo/imagem)
@@ -18,7 +20,7 @@ lad-assets/
   SOUNDS_LICENSING.md    # créditos e licenças dos sons
 ```
 
-- `source/` — você coloca os arquivos crus aqui. É a única pasta de entrada. Aceita vídeo (`.mp4/.webm/.mov/.mkv`), imagem (`.jpg/.png/.webp`) e áudio (`.mp3/.ogg/.wav/.m4a/.flac/.opus`).
+- `source/` — você coloca os arquivos crus aqui. É a única pasta de entrada. Aceita vídeo (`.mp4/.webm/.mov/.mkv`), imagem (`.jpg/.png/.webp`), cena SVG pronta (`.svg`) e áudio (`.mp3/.ogg/.wav/.m4a/.flac/.opus`).
 - `full/` — gerado pelo script. Para vídeo, o loop é fechado por crossfade quando a costura é visível; clipes já bem fechados são só remuxados. Para áudio, o source é transcodificado para `.mp3` (`libmp3lame -q:a 4`). É este arquivo que o app baixa.
 - `preview/` — gerado pelo script apenas para vídeo/imagem (miniatura + poster). **Áudio não tem preview** — o app usa um ícone (campo `icon`, igual ao `id`) e o nome.
 - O nome do arquivo vira o `id` do asset. O rótulo exibido é derivado do nome (`ondas-do-mar.mp4` → "Ondas Do Mar"); para controlar o texto em pt-BR, mapeie em `labels.json` (ex.: `{ "ondas-do-mar": "Ondas do mar" }`).
@@ -70,8 +72,19 @@ bash scripts/generate-previews.sh
 
 O script recria `full/`, `preview/` e `manifest.json` a partir do conteúdo de `source/` (idempotente). A `version` de cada asset é o hash do arquivo full gerado — trocar o source invalida o cache no app automaticamente.
 
+## Cenas (SPEC-263)
+
+Dois tipos aditivos de entrada no manifesto (`schemaVersion` continua 1; clients antigos descartam tipos desconhecidos):
+
+- `scene`: SVG pronto em `source/<id>.svg`. O script copia para `full/` e `preview/`, versiona pelo hash do conteúdo e recusa arquivo com 131.072 caracteres ou mais (limite do app). `license` e `attribution` vêm de `scenes.<id>` em `presets.json`. Os SVGs de `scene-code-rain` e `scene-snow-cabin` são produzidos pelo export do app (`node scripts/export-static-scenes.ts <dir>` no repo do LAD), nunca editados à mão.
+- `preset`: gerador do app + parâmetros, sem arquivo a baixar. Declarado em `presets.json` (`id`, `generator`, `minGeneratorVersion`, `params`, `license`, `attribution`); a `version` é o hash de `generator`, `minGeneratorVersion` e `params`. O gerador vive no bundle do app: id desconhecido ou versão mínima maior que a do app faz o app ignorar o preset.
+
+`presets.json` também traz `order` (ids na ordem em que as cenas aparecem no manifesto, fundamentais primeiro). Os nomes em pt-BR ficam em `labels.json`. Os textos de licença MIT das fontes (`anhnt256/claude-code-themes` e `PerspicaciousGuy/ClaudeCodeThemes`) estão em `LICENSES/`.
+
 ## Licença dos assets
 
 **Backgrounds:** use apenas mídia de licença permissiva / CC0 liberada para uso comercial sem atribuição (Pixabay, Pexels, Coverr, Unsplash). Não adicione material copyleft (GPL) ou de proveniência incerta.
+
+**Cenas:** as cenas e os presets derivam de código MIT; `license`/`attribution` no manifesto e os textos em `LICENSES/` acompanham cada um. Nenhum tema de terceiros sem licença entra.
 
 **Sons:** cada som carrega a licença original do autor (`licenses.json` + `SOUNDS_LICENSING.md`). Sons `CC BY` e `CC BY-SA` são permitidos, mas exigem atribuição — mantenha autor e fonte em `SOUNDS_LICENSING.md`. A cláusula share-alike dos `CC BY-SA` recai sobre o arquivo de áudio, não sobre o app.
